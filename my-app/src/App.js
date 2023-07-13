@@ -65,13 +65,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Home />
+            } />
           <Route path="inventory" element={<><Inventory/>
-
-          <AutosList autos = {state.automobiles}/>
-
-        </>}/>
-
+              <AutosList autos = {state.automobiles}/></>}/>
           <Route path="SellCar" element={<SellCar />} />
           <Route path="*" element={<NoPage />} />
         </Route>
