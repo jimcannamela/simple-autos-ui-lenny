@@ -1,9 +1,12 @@
 
 
 
-function Automobile() {
+function Automobile({auto}) {
     return (
-        <h1>autos</h1>
+        <li>
+        <p>{auto.make} {auto.model}</p>
+        </li>
+
  
     )
 }

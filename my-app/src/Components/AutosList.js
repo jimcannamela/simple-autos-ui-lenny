@@ -1,10 +1,10 @@
 
+import Automobile from "./Automobile";
 
-
-function AutosList() {
+function AutosList({autos}) {
     return (
-        <h1>List</h1>
- 
+
+        autos.map((auto) =>  <Automobile auto={auto}/>)
     )
 }
 
