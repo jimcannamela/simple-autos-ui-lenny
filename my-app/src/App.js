@@ -14,14 +14,22 @@ import AutosList from './Components/AutosList';
 
 
 export const ACTION = {
-  GET_ALL_AUTOS: 'get-all-autos'
+  GET_ALL_AUTOS: 'get-all-autos',
+  GET_AUTOS: 'get-autos'
 }
 
 function reducer(state, action) {
   switch(action.type) {
     case ACTION.GET_ALL_AUTOS:
-      console.log(action.payload);
+      console.log(action.payload)
       return{...state, automobiles:action.payload}
+      
+    case ACTION.GET_AUTOS:
+      console.log(action.payload)
+      return{...state, automobiles:action.payload}
+    
+    default:
+        return state
   }
 }
 
@@ -39,20 +47,47 @@ function App() {
       return response.json();
     }
 
+    async function getAutosByColorAndMake(color, make) {
+      console.log("color " + color + " make " + make)
+      const response = await fetch(`http://localhost:8080/api/autos?color=${color}&make=${make}`)
+      return response.json();
+    }
 
-    useEffect(() => {
-      getAutos()
-      .then((autosData) => {
-        dispatch({type: ACTION.GET_ALL_AUTOS, payload: autosData.automobiles})
-      })
-      .catch((err) => {
+    // async function getAutosByColor(color) {
+    //   const response = await fetch(`http://localhost:8080/api/autos?color=${color}`)
+    //   return response.json();
+    // }
 
-      })
-    }, [])
+    // async function getAutosByMake(make) {
+    //   const response = await fetch(`http://localhost:8080/api/autos?make=${make}`)
+    //   return response.json();
+    // }
 
+    // useEffect(() => {
+    //   getAutos()
+    //   .then((autosData) => {
+    //     dispatch({type: ACTION.GET_ALL_AUTOS, payload: autosData.automobiles})
+    //   })
+    //   .catch((err) => {
+    //   })
+    // }, [])
+
+    function submitSearch(e) {
+      e.preventDefault();
+      let searchColor = e.target.searchColor.value;
+      let searchMake = e.target.searchMake.value;
     
-
-
+      if (searchColor !== undefined && searchColor !== '' && searchMake !== undefined && searchMake !== '') {
+        getAutosByColorAndMake(searchColor, searchMake)
+        console.log("color " + searchColor + " make " + searchMake)
+        .then((autosData) => {
+          dispatch({ type: ACTION.GET_AUTOS, payload: autosData.autos })      
+        })
+        .catch((err) => {
+    
+        })
+      }
+    }
 
   return (
     <>
@@ -62,19 +97,18 @@ function App() {
       </header>
       <main>
         <body>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />
-            } />
-          <Route path="inventory" element={<><Inventory/>
-              <AutosList autos = {state.automobiles}/></>}/>
-          <Route path="SellCar" element={<SellCar />} />
-          <Route path="*" element={<NoPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index render={(props) => submitSearch} element={<><Home />
+                  <AutosList autos = {state.automobiles}/></>} />
+                <Route path="inventory" element={<><Inventory/>
+                  <AutosList autos = {state.automobiles}/></>}/>
+                <Route path="SellCar" element={<SellCar />} />
+                <Route path="*" element={<NoPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
         </body>
       </main>
       <footer className="App-footer">
