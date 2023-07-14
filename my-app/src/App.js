@@ -1,8 +1,8 @@
 import './App.css';
-import {useEffect, useReducer, useState} from 'react'
+// import {useEffect, useReducer, useState} from 'react'
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import Automobile from './Components/Automobile';
+// import Automobile from './Components/Automobile';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
@@ -10,56 +10,39 @@ import Home from "./pages/Home";
 import Inventory from "./pages/Inventory";
 import SellCar from "./pages/SellCar";
 import NoPage from "./pages/NoPage";
-import AutosList from './Components/AutosList';
+// import AutosList from './Components/AutosList';
 
 
-export const ACTION = {
-  GET_ALL_AUTOS: 'get-all-autos',
-  GET_AUTOS: 'get-autos'
-}
+// export const ACTION = {
+//   GET_ALL_AUTOS: 'get-all-autos',
+//   GET_AUTOS: 'get-autos'
+// }
 
-function reducer(state, action) {
-  switch(action.type) {
-    case ACTION.GET_ALL_AUTOS:
-      console.log(action.payload)
-      return{...state, automobiles:action.payload}
+// function reducer(state, action) {
+//   switch(action.type) {
+//     case ACTION.GET_ALL_AUTOS:
+//       console.log(action.payload)
+//       return{...state, automobiles:action.payload}
       
-    case ACTION.GET_AUTOS:
-      console.log(action.payload)
-      return{...state, automobiles:action.payload}
+//     case ACTION.GET_AUTOS:
+//       console.log(action.payload)
+//       return{...state, automobiles:action.payload}
     
-    default:
-        return state
-  }
-}
+//     default:
+//         return state
+//   }
+// }
 
-const initialState = {
-  automobiles: []
-}
-
+// const initialState = {
+//   automobiles: []
+// }
 
 function App() {
 
-    const [state, dispatch] = useReducer(reducer, initialState)
+    // const [state, dispatch] = useReducer(reducer, initialState)
 
-    async function getAutos() {
-      const response = await fetch('http://localhost:8080/api/autos')
-      return response.json();
-    }
-
-    async function getAutosByColorAndMake(color, make) {
-      console.log("color " + color + " make " + make)
-      const response = await fetch(`http://localhost:8080/api/autos?color=${color}&make=${make}`)
-      return response.json();
-    }
-
-    // async function getAutosByColor(color) {
-    //   const response = await fetch(`http://localhost:8080/api/autos?color=${color}`)
-    //   return response.json();
-    // }
-
-    // async function getAutosByMake(make) {
-    //   const response = await fetch(`http://localhost:8080/api/autos?make=${make}`)
+    // async function getAutos() {
+    //   const response = await fetch('http://localhost:8080/api/autos')
     //   return response.json();
     // }
 
@@ -72,22 +55,40 @@ function App() {
     //   })
     // }, [])
 
-    function submitSearch(e) {
-      e.preventDefault();
-      let searchColor = e.target.searchColor.value;
-      let searchMake = e.target.searchMake.value;
+    // async function getAutosByColorAndMake(color, make) {
+    //   console.log("color " + color + " make " + make)
+    //   const response = await fetch(`http://localhost:8080/api/autos?color=${color}&make=${make}`)
+    //   return response.json();
+    // }
+
+    // async function getAutosByColor(color) {
+    //   const response = await fetch(`http://localhost:8080/api/autos?color=${color}`)
+    //   return response.json();
+    // }
+
+    // async function getAutosByMake(make) {
+    //   const response = await fetch(`http://localhost:8080/api/autos?make=${make}`)
+    //   return response.json();
+    // }
+
+
+
+    // function submitSearch(e) {
+    //   e.preventDefault();
+    //   let searchColor = e.target.searchColor.value;
+    //   let searchMake = e.target.searchMake.value;
     
-      if (searchColor !== undefined && searchColor !== '' && searchMake !== undefined && searchMake !== '') {
-        getAutosByColorAndMake(searchColor, searchMake)
-        console.log("color " + searchColor + " make " + searchMake)
-        .then((autosData) => {
-          dispatch({ type: ACTION.GET_AUTOS, payload: autosData.autos })      
-        })
-        .catch((err) => {
+    //   if (searchColor !== undefined && searchColor !== '' && searchMake !== undefined && searchMake !== '') {
+    //     getAutosByColorAndMake(searchColor, searchMake)
+    //     console.log("color " + searchColor + " make " + searchMake)
+    //     .then((autosData) => {
+    //       dispatch({ type: ACTION.GET_AUTOS, payload: autosData.autos })      
+    //     })
+    //     .catch((err) => {
     
-        })
-      }
-    }
+    //     })
+    //   }
+    // }
 
   return (
     <>
@@ -100,10 +101,9 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Layout />}>
-                <Route index render={(props) => submitSearch} element={<><Home />
-                  <AutosList autos = {state.automobiles}/></>} />
-                <Route path="inventory" element={<><Inventory/>
-                  <AutosList autos = {state.automobiles}/></>}/>
+                <Route index element={<Home />} />
+                <Route path="inventory" element={<><Inventory/></>}/>
+                  {/* <AutosList autos = {state.automobiles}/></>}/> */}
                 <Route path="SellCar" element={<SellCar />} />
                 <Route path="*" element={<NoPage />} />
               </Route>
