@@ -3,11 +3,13 @@
 
 function Automobile({auto}) {
     return (
-        <li>
-        <p>{auto.make} {auto.model}</p>
-        </li>
-
- 
+        <tr>
+            <td>{auto.year}</td>
+            <td>{auto.make}</td>
+            <td>{auto.model}</td>
+            <td>{auto.color}</td>
+            <td><button>Pick Me!</button></td>
+        </tr>
     )
 }
 

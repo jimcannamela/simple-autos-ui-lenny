@@ -1,9 +1,5 @@
-import {useEffect, useReducer, useState} from 'react'
-import Header from '../Components/Header';
-import Footer from '../Components/Footer';
-import Automobile from '../Components/Automobile';
+import {useEffect, useReducer} from 'react'
 import AutosList from "../Components/AutosList";
-
 
 export const ACTION = {
   GET_ALL_AUTOS: 'get-all-autos'
@@ -24,8 +20,6 @@ const initialState = {
   automobiles: []
 }
 
-// const Inventory = () => {
-
 function Inventory() {
 
     const [state, dispatch] = useReducer(reducer, initialState)
@@ -43,7 +37,6 @@ function Inventory() {
       .catch((err) => {
       })
     }, [])
-
 
     return <div>
     <h1>Inventory List</h1>
